@@ -1,5 +1,6 @@
 "use client";
-import { Calendar, ArrowRight } from "lucide-react";
+import { useState } from "react";
+import { Calendar, ArrowRight, Play, X } from "lucide-react";
 
 const avatars = ["👩‍🎓", "👦", "👧", "👨‍🎓"];
 
@@ -64,6 +65,8 @@ const features = [
 ];
 
 export default function Hero() {
+  const [videoOpen, setVideoOpen] = useState(false);
+
   return (
     <section id="home" style={{ paddingTop: 64, overflowX: "hidden" }}>
       {/* Main Hero */}
@@ -119,6 +122,10 @@ export default function Hero() {
                   <Calendar size={16} />
                   Book Free Trial
                 </a>
+                <button onClick={() => setVideoOpen(true)} className="btn-outline" style={{ fontSize: 14, padding: "12px 22px", cursor: "pointer", border: "2px solid #1a2e6e", background: "transparent", color: "#1a2e6e", borderRadius: 10, fontWeight: 600, display: "flex", alignItems: "center", gap: 8 }}>
+                  <Play size={16} fill="#1a2e6e" />
+                  Start Learning
+                </button>
                 <a href="#courses" className="btn-outline" style={{ fontSize: 14, padding: "12px 22px" }}>
                   View Courses
                   <ArrowRight size={16} />
@@ -302,6 +309,34 @@ export default function Hero() {
           </div>
         </div>
       </div>
+
+      {/* Video Modal */}
+      {videoOpen && (
+        <div onClick={() => setVideoOpen(false)} style={{
+          position: "fixed", inset: 0, zIndex: 9999,
+          background: "rgba(0,0,0,0.8)",
+          display: "flex", alignItems: "center", justifyContent: "center",
+          padding: 16,
+        }}>
+          <div onClick={e => e.stopPropagation()} style={{
+            position: "relative", width: "100%", maxWidth: 800,
+            background: "#000", borderRadius: 16, overflow: "hidden",
+          }}>
+            <button onClick={() => setVideoOpen(false)} style={{
+              position: "absolute", top: 8, right: 8, zIndex: 10,
+              width: 36, height: 36, borderRadius: "50%",
+              background: "rgba(0,0,0,0.6)", color: "white",
+              border: "none", cursor: "pointer",
+              display: "flex", alignItems: "center", justifyContent: "center",
+            }}>
+              <X size={18} />
+            </button>
+            <video controls autoPlay style={{ width: "100%", display: "block" }}>
+              <source src="/intro-video.mp4" type="video/mp4" />
+            </video>
+          </div>
+        </div>
+      )}
 
       <style>{`
         @media (max-width: 768px) {

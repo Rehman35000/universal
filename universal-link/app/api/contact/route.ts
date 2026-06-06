@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import nodemailer from "nodemailer";
 
 export async function POST(req: NextRequest) {
   try {
@@ -9,7 +10,6 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: "Missing required fields" }, { status: 400 });
     }
 
-    // Log submission (replace with nodemailer when ready)
     console.log("=== New Contact Form Submission ===");
     console.log("Name:", name);
     console.log("Email:", email);
@@ -19,32 +19,30 @@ export async function POST(req: NextRequest) {
     console.log("Timestamp:", new Date().toISOString());
     console.log("===================================");
 
-    // To enable email:
-    // 1. npm install nodemailer @types/nodemailer
-    // 2. Add EMAIL_USER and EMAIL_PASS to .env.local
-    // 3. Uncomment the block below:
+    if (process.env.EMAIL_USER && process.env.EMAIL_PASS) {
+      const transporter = nodemailer.createTransport({
+        service: "gmail",
+        auth: {
+          user: process.env.EMAIL_USER,
+          pass: process.env.EMAIL_PASS,
+        },
+      });
 
-    /*
-    const nodemailer = require("nodemailer");
-    const transporter = nodemailer.createTransport({
-      service: "gmail",
-      auth: { user: process.env.EMAIL_USER, pass: process.env.EMAIL_PASS },
-    });
-    await transporter.sendMail({
-      from: process.env.EMAIL_USER,
-      to: "universallink.co@gmail.com",
-      subject: `New Trial Booking: ${name} — ${course}`,
-      html: `
-        <h2>New Trial Class Booking</h2>
-        <p><b>Name:</b> ${name}</p>
-        <p><b>Email:</b> ${email}</p>
-        <p><b>Phone:</b> ${phone || "Not provided"}</p>
-        <p><b>Course:</b> ${course}</p>
-        <p><b>Message:</b> ${message || "No message"}</p>
-        <p><b>Time:</b> ${new Date().toISOString()}</p>
-      `,
-    });
-    */
+      await transporter.sendMail({
+        from: process.env.EMAIL_USER,
+        to: "universallink.co@gmail.com",
+        subject: `New Trial Booking: ${name} — ${course}`,
+        html: `
+          <h2>New Trial Class Booking</h2>
+          <p><b>Name:</b> ${name}</p>
+          <p><b>Email:</b> ${email}</p>
+          <p><b>Phone:</b> ${phone || "Not provided"}</p>
+          <p><b>Course:</b> ${course}</p>
+          <p><b>Message:</b> ${message || "No message"}</p>
+          <p><b>Time:</b> ${new Date().toISOString()}</p>
+        `,
+      });
+    }
 
     return NextResponse.json({ success: true, message: "Message received!" });
   } catch (error) {

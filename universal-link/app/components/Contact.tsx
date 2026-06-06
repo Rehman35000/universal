@@ -41,12 +41,16 @@ export default function Contact() {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const waText = encodeURIComponent(
-      `Hi! I'd like to book a free trial class.\n\nName: ${formData.name}\nEmail: ${formData.email}\nPhone: ${formData.phone}\nCourse: ${formData.course}\nMessage: ${formData.message}`
-    );
-    window.open(`https://wa.me/923333993355?text=${waText}`, "_blank");
+
+    await fetch("/api/contact", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(formData),
+    });
+
+    setFormData({ name: "", email: "", phone: "", course: "", message: "" });
     setSubmitted(true);
     setTimeout(() => setSubmitted(false), 4000);
   };
@@ -73,7 +77,7 @@ export default function Contact() {
           <div style={{ background: "white", borderRadius: 20, padding: "28px 24px", boxShadow: "0 4px 24px rgba(26,46,110,0.08)" }}>
             {submitted && (
               <div style={{ background: "#e8fdf5", color: "#00b894", padding: "12px 16px", borderRadius: 10, marginBottom: 16, textAlign: "center" }}>
-                ✅ Redirecting to WhatsApp...
+                ✅ Thank you! We&apos;ll get back to you within 24 hours.
               </div>
             )}
             <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: 12 }}>
@@ -90,7 +94,7 @@ export default function Contact() {
               </select>
               <textarea name="message" placeholder="Message (optional)" onChange={handleChange} className="form-input" style={{ minHeight: 100, resize: "vertical" }} />
               <button type="submit" className="btn-primary" style={{ width: "100%", justifyContent: "center", marginTop: 4 }}>
-                <Send size={16} /> Send via WhatsApp
+                <Send size={16} /> Send Message
               </button>
             </form>
           </div>

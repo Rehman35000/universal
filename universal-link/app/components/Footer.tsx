@@ -92,7 +92,7 @@ export default function Footer() {
             © {year} Universal Link Online Academy. All rights reserved.
           </p>
           <p style={{ color: "rgba(255,255,255,0.45)", fontSize: 12 }}>
-            Made with ❤️ for students worldwide
+            Developer by Ikram Khan
           </p>
         </div>
       </div>

@@ -1,6 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
-import { Menu, X, Calendar } from "lucide-react";
+import { Menu, X, Calendar, Phone } from "lucide-react";
 
 const navLinks = [
   { label: "Home", href: "#home" },
@@ -67,6 +67,16 @@ export default function Navbar() {
 
         {/* CTA + Mobile btn */}
         <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+          <a href="tel:+92518898477" className="mobile-call-btn" style={{
+            padding: "9px 14px",
+            background: "#25d366", color: "white",
+            borderRadius: 8, textDecoration: "none",
+            display: "flex", alignItems: "center", gap: 6,
+            fontSize: 13, fontWeight: 600, whiteSpace: "nowrap",
+          }}>
+            <Phone size={13} />
+            051 518 898477
+          </a>
           <a href="#contact" className="desktop-cta" style={{
             padding: "9px 14px",
             background: "#1a2e6e", color: "white",
@@ -113,7 +123,7 @@ export default function Navbar() {
             alignItems: "center",
             justifyContent: "center",
             gap: 8,
-            marginTop: 16,
+            marginTop: 8,
             padding: "12px 16px",
             background: "#1a2e6e", color: "white",
             borderRadius: 8, textDecoration: "none",
@@ -125,6 +135,25 @@ export default function Navbar() {
       )}
 
       <style>{`
+        .call-tooltip {
+          position: absolute;
+          top: 110%;
+          left: 50%;
+          transform: translateX(-50%);
+          background: #1a2e6e;
+          color: white;
+          padding: 4px 10px;
+          border-radius: 6px;
+          font-size: 12px;
+          white-space: nowrap;
+          pointer-events: none;
+          opacity: 0;
+          transition: opacity 0.2s;
+          z-index: 10;
+        }
+        .mobile-call-btn:hover .call-tooltip {
+          opacity: 1;
+        }
         @media (max-width: 900px) {
           .desktop-nav { display: none !important; }
           .desktop-cta { display: none !important; }
