@@ -41,15 +41,8 @@ export default function Contact() {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-
-    await fetch("/api/contact", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(formData),
-    });
-
     setFormData({ name: "", email: "", phone: "", course: "", message: "" });
     setSubmitted(true);
     setTimeout(() => setSubmitted(false), 4000);
