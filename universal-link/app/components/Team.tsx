@@ -2,7 +2,7 @@
 
 const team = [
   {
-    name: "Muhammad Asif",
+    name: "Asfand yar",
     role: "Chief Executive Officer",
     tag: "CEO",
     photo: "/ceo.png",
@@ -10,7 +10,7 @@ const team = [
     emoji: "👨‍💼",
   },
   {
-    name: "Sarah Ahmed",
+    name: "shezail asad",
     role: "HR Manager",
     tag: "HR",
     photo: "/hr-manager.png",
@@ -139,6 +139,15 @@ export default function Team() {
 
               {/* Info — name removed */}
               <div style={{ padding: "18px 20px 22px" }}>
+                <h3 style={{
+                  fontSize: 18,
+                  fontWeight: 800,
+                  color: "#1a1a2e",
+                  margin: "0 0 6px",
+                  lineHeight: 1.25,
+                }}>
+                  {member.name}
+                </h3>
                 <div style={{
                   fontSize: 13,
                   fontWeight: 600,
